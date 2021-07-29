@@ -1,10 +1,10 @@
 package com.srivathsanvenkateswaran.cryptocurrencyapp.models
 
-data class TransactionHistory(
+data class Transaction(
     val transactionID: Int,
     val description: String,
     val amount: Float,
-    val currency: String,
+    val currencyCode: String,
     val transactionType: String,
     val transactionDate: String
 )

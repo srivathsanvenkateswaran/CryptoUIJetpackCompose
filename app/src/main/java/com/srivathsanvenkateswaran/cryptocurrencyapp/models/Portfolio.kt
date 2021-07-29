@@ -2,5 +2,6 @@ package com.srivathsanvenkateswaran.cryptocurrencyapp.models
 
 data class Portfolio(
     val balance: Float,
-    val changes: Float
+    val changes: Float,
+    val changeType: String
 )

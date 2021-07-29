@@ -11,5 +11,5 @@ data class TrendingCurrency(
     val description: String,
     val chartData: List<Pair<Float, Float>>,
     val wallet: Wallet,
-    val transactionHistory: List<TransactionHistory>,
+    val transactionHistory: List<Transaction>,
 )
