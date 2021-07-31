@@ -8,31 +8,54 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.CryptocurrencyAppTheme
+import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.Screen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CryptocurrencyAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                val navController = rememberNavController()
+
+                NavHost(
+                    navController = navController,
+                    startDestination = Screen.SplashScreen.route
+                ) {
+                    composable(
+                        route = Screen.SplashScreen.route
+                    ) {
+
+                    }
+                    composable(
+                        route = Screen.HomeScreen.route
+                    ) {
+
+                    }
+                    composable(
+                        route = Screen.CryptoDetailScreen.route
+                    ) {
+
+                    }
+                    composable(
+                        route = Screen.TransactionScreen.route
+                    ) {
+
+                    }
+
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     CryptocurrencyAppTheme {
-        Greeting("Android")
+
     }
 }
