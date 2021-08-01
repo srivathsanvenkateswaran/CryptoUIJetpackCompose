@@ -4,15 +4,24 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.srivathsanvenkateswaran.cryptocurrencyapp.composables.SplashScreen
+import com.srivathsanvenkateswaran.cryptocurrencyapp.composables.*
 import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.CryptocurrencyAppTheme
+import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.NavigationItems
 import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.Screen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -26,46 +35,54 @@ class MainActivity : ComponentActivity() {
             CryptocurrencyAppTheme {
                 val navController = rememberNavController()
 
-                NavHost(
-                    navController = navController,
-                    startDestination = Screen.SplashScreen.route
+                Scaffold(
+                    bottomBar = {
+                        BottomnavigationBar(
+                            onItemSelected = {
+                                when (it) {
+                                    NavigationItems.Home -> navController.navigate(Screen.HomeScreen.route)
+                                    NavigationItems.Portfolio -> navController.navigate(Screen.TransactionScreen.route)
+                                    NavigationItems.Prices -> navController.navigate(Screen.CryptoDetailScreen.route)
+                                    NavigationItems.Settings -> navController.navigate(Screen.SettingsScreen.route)
+                                }
+                            }
+                        )
+                    }
                 ) {
-                    composable(
-                        route = Screen.SplashScreen.route
-                    ) {
-                        SplashScreen()
-                        GlobalScope.launch(Dispatchers.Main) {
-                            delay(2000)
-                            navController.popBackStack()
-                            navController.navigate(Screen.HomeScreen.route)
-                        }
-                    }
-                    composable(
-                        route = Screen.HomeScreen.route
-                    ) {
-
-                    }
-                    composable(
-                        route = Screen.CryptoDetailScreen.route
-                    ) {
-
-                    }
-                    composable(
-                        route = Screen.TransactionScreen.route
-                    ) {
-
-                    }
-
+                    Navigation(navController)
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    CryptocurrencyAppTheme {
-
+fun Navigation(
+    navController: NavHostController
+) {
+    NavHost(
+        navController = navController,
+        startDestination = Screen.HomeScreen.route
+    ) {
+        composable(
+            route = Screen.HomeScreen.route
+        ) {
+            HomeScreen()
+        }
+        composable(
+            route = Screen.CryptoDetailScreen.route
+        ) {
+            CryptoDetailScreen()
+        }
+        composable(
+            route = Screen.TransactionScreen.route
+        ) {
+            TransactionScreen()
+        }
+        composable(
+            route = Screen.SettingsScreen.route
+        ) {
+            SettingsScreen()
+        }
     }
 }

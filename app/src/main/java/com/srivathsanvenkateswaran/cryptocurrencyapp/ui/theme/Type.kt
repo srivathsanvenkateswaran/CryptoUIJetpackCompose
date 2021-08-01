@@ -57,7 +57,7 @@ val Typography = Typography(
     ), // Subtitle 2 is body 4
     h5 = TextStyle(
         fontFamily = RobotoRegular,
-        fontSize = 12.sp,
+        fontSize = 10.sp,
         lineHeight = 22.sp
     ), // h5 is body 5
 )

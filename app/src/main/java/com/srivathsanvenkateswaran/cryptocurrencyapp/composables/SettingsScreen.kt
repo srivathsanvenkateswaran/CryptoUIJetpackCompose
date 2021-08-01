@@ -5,6 +5,6 @@ import androidx.compose.runtime.Composable
 import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.Screen
 
 @Composable
-fun HomeScreen() {
-    Text(text = "Home Screen")
+fun SettingsScreen() {
+    Text(text = "Settings Screen")
 }
