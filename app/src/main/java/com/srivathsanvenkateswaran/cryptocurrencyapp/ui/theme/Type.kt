@@ -22,12 +22,12 @@ val Typography = Typography(
     ),
     h2 = TextStyle(
         fontFamily = RobotoBold,
-        fontSize = 22.sp,
+        fontSize = 18.sp,
         lineHeight = 30.sp
     ),
     h3 = TextStyle(
         fontFamily = RobotoBold,
-        fontSize = 16.sp,
+        fontSize = 14.sp,
         lineHeight = 22.sp
     ),
     h4 = TextStyle(
@@ -47,7 +47,7 @@ val Typography = Typography(
     ),
     subtitle1 = TextStyle(
         fontFamily = RobotoRegular,
-        fontSize = 16.sp,
+        fontSize = 12.sp,
         lineHeight = 22.sp
     ), // Subtitle 1 is body 3
     subtitle2 = TextStyle(

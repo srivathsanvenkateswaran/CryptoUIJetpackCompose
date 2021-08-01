@@ -46,7 +46,6 @@ fun BottomnavigationBar(
             ),
         contentColor = Purple500,
         backgroundColor = Color.White,
-        elevation = 10.dp
     ) {
         navigationItems.forEach{
             BottomNavigationItem(

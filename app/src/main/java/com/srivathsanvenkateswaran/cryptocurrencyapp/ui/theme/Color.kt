@@ -22,3 +22,5 @@ val BlueGrey700 = Color(0xFF455A64)
 val Grey900 = Color(0xFF212121)
 
 val Purple500 = Color(0xFF6200EE)
+val PurpleOne = Color(0xFF9C27B0)
+val PurpleTwo = Color(0xFF673AB7)
