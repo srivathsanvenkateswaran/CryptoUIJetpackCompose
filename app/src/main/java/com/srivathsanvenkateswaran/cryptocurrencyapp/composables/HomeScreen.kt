@@ -108,7 +108,11 @@ private fun HomeScreenContent() {
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(Constants.PADDING_SIDE_VALUE.dp)
+                        .padding(
+                            top = Constants.PADDING_SIDE_VALUE.dp,
+                            start = Constants.PADDING_SIDE_VALUE.dp,
+                            end = Constants.PADDING_SIDE_VALUE.dp
+                        )
                 ) {
                     Text(
                         text = "Transaction History",
