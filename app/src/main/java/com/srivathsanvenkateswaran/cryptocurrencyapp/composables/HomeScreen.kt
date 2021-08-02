@@ -2,6 +2,7 @@ package com.srivathsanvenkateswaran.cryptocurrencyapp.composables
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -11,6 +12,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.layout.ContentScale
@@ -24,6 +27,7 @@ import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.Gray
 import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.Green
 import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.Red
 import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.Typography
+import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.Constants
 import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.DummyData
 
 @Composable
@@ -69,18 +73,22 @@ fun HomeScreen() {
                     color = Color.White,
                     style = Typography.h2,
                     modifier = Modifier
-                        .padding(start = 12.dp)
+                        .padding(start = Constants.PADDING_SIDE_VALUE.dp)
                 )
 
                 LazyRow(
                     modifier = Modifier
-                        .padding(end = 12.dp)
+                        .padding(end = Constants.PADDING_SIDE_VALUE.dp)
                 ) {
                     items(items = DummyData.trendingCurrencies) { currency ->
-                        Spacer(modifier = Modifier.width(12.dp))
+                        Spacer(modifier = Modifier.width(Constants.PADDING_SIDE_VALUE.dp))
                         CurrencyCard(currency = currency)
                     }
                 }
+                
+                Spacer(modifier = Modifier.height(Constants.ELEVATION_VALUE.dp))
+
+                SetPriceAlertSection()
             }
         }
 
@@ -89,13 +97,57 @@ fun HomeScreen() {
 }
 
 @Composable
+private fun SetPriceAlertSection() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Constants.PADDING_SIDE_VALUE.dp),
+        shape = MaterialTheme.shapes.medium,
+        elevation = Constants.ELEVATION_VALUE.dp
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(Constants.PADDING_SIDE_VALUE.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.notification_color),
+                contentDescription = "Price Alert Icon"
+            )
+
+            SetPriceAlertTextColumn()
+
+            Image(
+                painter = painterResource(id = R.drawable.right_arrow),
+                contentDescription = null
+            )
+        }
+    }
+}
+
+@Composable
+private fun SetPriceAlertTextColumn() {
+    Column() {
+        Text(
+            text = "Set Price Alert",
+            style = Typography.h3
+        )
+        Text(
+            text = "Get notified when your coins are moving",
+            style = Typography.subtitle2
+        )
+    }
+}
+
+@Composable
 private fun CurrencyCard(currency: TrendingCurrency) {
     Card(
         modifier = Modifier
             .width(150.dp)
-            .padding(top = 10.dp),
-        shape = RoundedCornerShape(8.dp),
-        elevation = 10.dp
+            .padding(top = Constants.PADDING_SIDE_VALUE.dp),
+        shape = MaterialTheme.shapes.medium,
+        elevation = Constants.ELEVATION_VALUE.dp
     ) {
         Column(
             modifier = Modifier
@@ -168,7 +220,7 @@ private fun CurrencyItem(
 
         Column(
             modifier = Modifier
-                .padding(start = 10.dp)
+                .padding(start = Constants.PADDING_SIDE_VALUE.dp)
         ) {
             Text(
                 text = currency.currencyName,
