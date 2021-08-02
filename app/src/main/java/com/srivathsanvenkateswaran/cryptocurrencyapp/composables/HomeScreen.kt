@@ -115,11 +115,18 @@ private fun HomeScreenContent() {
                         style = Typography.h2
                     )
 
-                    DummyData.transactionHistory.forEach{ transaction ->
+                    DummyData.transactionHistory.forEachIndexed{ index, transaction ->
                         TransactionItem(transaction)
                         Divider(
                             modifier = Modifier
-                                .padding(vertical = Constants.PADDING_SIDE_VALUE.dp)
+                                .padding(
+                                    top = Constants.PADDING_SIDE_VALUE.dp,
+                                    bottom = if(DummyData.transactionHistory.size-1 > index) {
+                                        Constants.PADDING_SIDE_VALUE.dp
+                                    } else {
+                                        0.dp
+                                    }
+                                )
                         )
                     }
                 }
@@ -129,7 +136,7 @@ private fun HomeScreenContent() {
 }
 
 @Composable
-private fun TransactionItem(transaction: Transaction) {
+fun TransactionItem(transaction: Transaction) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
