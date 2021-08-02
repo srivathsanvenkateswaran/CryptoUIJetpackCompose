@@ -13,14 +13,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavHost
-import androidx.navigation.NavHostController
-import androidx.navigation.Navigation
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.srivathsanvenkateswaran.cryptocurrencyapp.composables.*
+import com.srivathsanvenkateswaran.cryptocurrencyapp.models.TrendingCurrency
 import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.CryptocurrencyAppTheme
 import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.Purple500
 import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.PurpleOne
@@ -86,12 +85,25 @@ fun Navigation(
         composable(
             route = Screen.HomeScreen.route
         ) {
-            HomeScreen()
+            HomeScreen() { currencyCode ->
+                navController.navigate(Screen.CryptoDetailScreen.route + "/$currencyCode")
+            }
         }
         composable(
-            route = Screen.CryptoDetailScreen.route
+            route = Screen.CryptoDetailScreen.route + "/{currencyCode}",
+            arguments = listOf(
+                navArgument(name = "currencyCode") {
+                    type = NavType.StringType
+                }
+            )
         ) {
-            CryptoDetailScreen()
+            val currencyCode = it.arguments?.getString("currencyCode")!!
+            CryptoDetailScreen(
+                currencyCode = currencyCode,
+                onBackArrowPressed = {
+                    navController.popBackStack()
+                }
+            )
         }
         composable(
             route = Screen.TransactionScreen.route

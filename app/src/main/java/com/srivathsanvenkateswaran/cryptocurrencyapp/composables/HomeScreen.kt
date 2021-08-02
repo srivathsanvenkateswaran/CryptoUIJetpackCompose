@@ -25,7 +25,9 @@ import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.Constants
 import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.DummyData
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onCardClick: (String) -> Unit
+) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -35,13 +37,15 @@ fun HomeScreen() {
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = 50.dp)
         ) {
-            HomeScreenContent()
+            HomeScreenContent(onCardClick = onCardClick)
         }
     }
 }
 
 @Composable
-private fun HomeScreenContent() {
+private fun HomeScreenContent(
+    onCardClick: (String) -> Unit
+) {
     Box() {
         BannerImage()
 
@@ -88,7 +92,10 @@ private fun HomeScreenContent() {
             ) {
                 items(items = DummyData.trendingCurrencies) { currency ->
                     Spacer(modifier = Modifier.width(Constants.PADDING_SIDE_VALUE.dp))
-                    CurrencyCard(currency = currency)
+                    CurrencyCard(
+                        currency = currency,
+                        onCardClick = onCardClick
+                    )
                 }
             }
 
@@ -98,49 +105,54 @@ private fun HomeScreenContent() {
 
             InvestingSafetySection()
 
-            Card(
-                modifier = Modifier
-                    .padding(Constants.PADDING_SIDE_VALUE.dp)
-                    .fillMaxWidth(),
-                shape = MaterialTheme.shapes.medium,
-                elevation = Constants.ELEVATION_VALUE.dp,
-                backgroundColor = Color.White
-            ) {
-                Column(
+            TransactionHistorySection()
+        }
+    }
+}
+
+@Composable
+private fun TransactionHistorySection() {
+    Card(
+        modifier = Modifier
+            .padding(Constants.PADDING_SIDE_VALUE.dp)
+            .fillMaxWidth(),
+        shape = MaterialTheme.shapes.medium,
+        elevation = Constants.ELEVATION_VALUE.dp,
+        backgroundColor = Color.White
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(
+                    top = Constants.PADDING_SIDE_VALUE.dp,
+                    start = Constants.PADDING_SIDE_VALUE.dp,
+                    end = Constants.PADDING_SIDE_VALUE.dp
+                )
+        ) {
+            Text(
+                text = "Transaction History",
+                style = Typography.h2
+            )
+
+            DummyData.transactionHistory.forEachIndexed { index, transaction ->
+                TransactionItem(transaction)
+                Divider(
                     modifier = Modifier
                         .padding(
                             top = Constants.PADDING_SIDE_VALUE.dp,
-                            start = Constants.PADDING_SIDE_VALUE.dp,
-                            end = Constants.PADDING_SIDE_VALUE.dp
+                            bottom = if (DummyData.transactionHistory.size - 1 > index) {
+                                Constants.PADDING_SIDE_VALUE.dp
+                            } else {
+                                0.dp
+                            }
                         )
-                ) {
-                    Text(
-                        text = "Transaction History",
-                        style = Typography.h2
-                    )
-
-                    DummyData.transactionHistory.forEachIndexed{ index, transaction ->
-                        TransactionItem(transaction)
-                        Divider(
-                            modifier = Modifier
-                                .padding(
-                                    top = Constants.PADDING_SIDE_VALUE.dp,
-                                    bottom = if(DummyData.transactionHistory.size-1 > index) {
-                                        Constants.PADDING_SIDE_VALUE.dp
-                                    } else {
-                                        0.dp
-                                    }
-                                )
-                        )
-                    }
-                }
+                )
             }
         }
     }
 }
 
 @Composable
-fun TransactionItem(transaction: Transaction) {
+private fun TransactionItem(transaction: Transaction) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -306,11 +318,17 @@ private fun SetPriceAlertTextColumn() {
 }
 
 @Composable
-private fun CurrencyCard(currency: TrendingCurrency) {
+private fun CurrencyCard(
+    currency: TrendingCurrency,
+    onCardClick: (String) -> Unit
+) {
     Card(
         modifier = Modifier
             .width(150.dp)
-            .padding(top = Constants.PADDING_SIDE_VALUE.dp),
+            .padding(top = Constants.PADDING_SIDE_VALUE.dp)
+            .clickable {
+                onCardClick(currency.currencyCode)
+            },
         shape = MaterialTheme.shapes.medium,
         elevation = Constants.ELEVATION_VALUE.dp
     ) {
@@ -446,5 +464,7 @@ private fun BannerImage() {
 @Preview
 @Composable
 fun HomeScreenPrev() {
-    HomeScreen()
+    HomeScreen() {
+
+    }
 }
