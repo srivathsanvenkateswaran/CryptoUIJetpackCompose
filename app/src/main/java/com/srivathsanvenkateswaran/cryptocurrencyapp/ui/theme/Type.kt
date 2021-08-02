@@ -32,7 +32,7 @@ val Typography = Typography(
     ),
     h4 = TextStyle(
         fontFamily = RobotoBold,
-        fontSize = 14.sp,
+        fontSize = 16.sp,
         lineHeight = 22.sp
     ),
     body1 = TextStyle(
