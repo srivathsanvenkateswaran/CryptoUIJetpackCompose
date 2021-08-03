@@ -30,7 +30,8 @@ fun HomeScreen(
 ) {
     Surface(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        color = LightGray1
     ) {
         Column(
             modifier = Modifier
@@ -348,8 +349,12 @@ private fun CurrencyCard(
 }
 
 @Composable
-private fun ValuesItem(
-    currency: TrendingCurrency
+fun ValuesItem(
+    currency: TrendingCurrency,
+    priceModifier: Modifier = Modifier
+        .padding(top = 20.dp),
+    changesModifier: Modifier = Modifier
+        .padding(top = 5.dp)
 ) {
     var changeColor by remember {
         mutableStateOf(
@@ -374,21 +379,19 @@ private fun ValuesItem(
     Text(
         text = "£${currency.currentPrice}",
         style = Typography.h3,
-        modifier = Modifier
-            .padding(top = 20.dp)
+        modifier = priceModifier
     )
 
     Text(
         text = "$changeOperator${currency.changes}%",
         style = Typography.h3,
         color = changeColor,
-        modifier = Modifier
-            .padding(top = 5.dp)
+        modifier = changesModifier
     )
 }
 
 @Composable
-private fun CurrencyItem(
+fun CurrencyItem(
     currency: TrendingCurrency
 ) {
     Row(

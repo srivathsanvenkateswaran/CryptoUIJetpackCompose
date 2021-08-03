@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -24,6 +25,7 @@ import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.Constants
 import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.DummyData
 import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.Screen
 import com.srivathsanvenkateswaran.cryptocurrencyapp.R
+import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.LightGray1
 
 @Composable
 fun CryptoDetailScreen(
@@ -35,10 +37,47 @@ fun CryptoDetailScreen(
     Surface(
         modifier = Modifier
             .fillMaxSize(),
-        color = Color.LightGray
+        color = LightGray1
     ) {
         Column() {
             TopNavigationRow(onBackArrowPressed = onBackArrowPressed)
+
+            Card(
+                modifier = Modifier
+                    .padding(Constants.PADDING_SIDE_VALUE.dp)
+                    .fillMaxWidth()
+            ) {
+                CardCurrencyInfoSection(currency = currency)
+            }
+        }
+    }
+}
+
+@Composable
+private fun CardCurrencyInfoSection(
+    currency: TrendingCurrency
+) {
+    Column() {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(Constants.PADDING_SIDE_VALUE.dp)
+        ) {
+            CurrencyItem(currency = currency)
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(Constants.PADDING_SIDE_VALUE.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+            ) {
+                ValuesItem(
+                    currency = currency,
+                    changesModifier = Modifier,
+                    priceModifier = Modifier
+                )
+            }
         }
     }
 }
