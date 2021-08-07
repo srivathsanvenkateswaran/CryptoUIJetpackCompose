@@ -102,6 +102,9 @@ fun Navigation(
                 currencyCode = currencyCode,
                 onBackArrowPressed = {
                     navController.popBackStack()
+                },
+                onButtonClick = {
+
                 }
             )
         }

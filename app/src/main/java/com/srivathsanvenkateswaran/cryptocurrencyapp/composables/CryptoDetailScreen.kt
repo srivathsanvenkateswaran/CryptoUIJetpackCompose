@@ -5,32 +5,30 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.srivathsanvenkateswaran.cryptocurrencyapp.models.TrendingCurrency
-import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.Gray
-import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.Typography
 import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.Constants
 import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.DummyData
 import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.Screen
 import com.srivathsanvenkateswaran.cryptocurrencyapp.R
-import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.LightGray1
+import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.*
 
 @Composable
 fun CryptoDetailScreen(
     currencyCode: String,
-    onBackArrowPressed: () -> Unit
+    onBackArrowPressed: () -> Unit,
+    onButtonClick: (String) -> Unit
 ) {
     val currency = DummyData.trendingCurrencies.find { it.currencyCode == currencyCode }!!
 
@@ -42,13 +40,161 @@ fun CryptoDetailScreen(
         Column() {
             TopNavigationRow(onBackArrowPressed = onBackArrowPressed)
 
-            Card(
-                modifier = Modifier
-                    .padding(Constants.PADDING_SIDE_VALUE.dp)
-                    .fillMaxWidth()
+            LineChartCardSection(currency = currency)
+
+            BuyCryptoCard(
+                currency = currency,
+                onButtonClick = onButtonClick
+            )
+
+            CurrencyDescriptionCard(currency = currency)
+
+            SetPriceAlertSection()
+        }
+    }
+}
+
+@Composable
+private fun CurrencyDescriptionCard(currency: TrendingCurrency) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Constants.PADDING_SIDE_VALUE.dp),
+        shape = MaterialTheme.shapes.medium,
+        elevation = Constants.ELEVATION_VALUE.dp
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(Constants.PADDING_SIDE_VALUE.dp)
+        ) {
+            Text(
+                text = "About ${currency.currencyName}",
+                style = Typography.h2
+            )
+            
+            Spacer(modifier = Modifier.height(2.dp))
+
+            Text(
+                text = "${currency.description}",
+                style = Typography.subtitle2
+            )
+        }
+    }
+}
+
+@Composable
+private fun BuyCryptoCard(
+    currency: TrendingCurrency,
+    onButtonClick: (String) -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .padding(Constants.PADDING_SIDE_VALUE.dp)
+            .fillMaxWidth(),
+        elevation = Constants.ELEVATION_VALUE.dp,
+        shape = MaterialTheme.shapes.medium
+    ) {
+        Column() {
+            CurrencyInfoBuyRow(currency = currency)
+
+            StandardButton(
+                onButtonClick = onButtonClick,
+                currency = currency,
+                buttonText = "Buy"
+            )
+        }
+    }
+}
+
+@Composable
+fun StandardButton(
+    onButtonClick: (String) -> Unit,
+    currency: TrendingCurrency,
+    buttonText: String
+) {
+    Button(
+        onClick = {
+            onButtonClick(currency.currencyCode)
+        },
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Green
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Constants.PADDING_SIDE_VALUE.dp),
+        shape = MaterialTheme.shapes.medium
+    ) {
+        Text(
+            text = buttonText,
+            color = Color.White
+        )
+    }
+}
+
+@Composable
+private fun CurrencyInfoBuyRow(currency: TrendingCurrency) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(Constants.PADDING_SIDE_VALUE.dp)
+    ) {
+        CurrencyItem(currency = currency)
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(
+                horizontalAlignment = Alignment.End
             ) {
-                CardCurrencyInfoSection(currency = currency)
+                Text(
+                    text = "£${DummyData.portfolio.balance}",
+                    style = Typography.h2,
+                )
+
+                Text(
+                    text = "${currency.wallet.crypto} ${currency.currencyCode}",
+                    style = Typography.subtitle2,
+                    color = BlueGrey700
+                )
             }
+
+            Image(
+                painter = painterResource(id = R.drawable.right_arrow),
+                contentDescription = null,
+                modifier = Modifier
+                    .clipToBounds()
+                    .padding(start = (Constants.PADDING_SIDE_VALUE * 1.5).dp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun LineChartCardSection(currency: TrendingCurrency) {
+    Card(
+        modifier = Modifier
+            .padding(Constants.PADDING_SIDE_VALUE.dp)
+            .fillMaxWidth(),
+        elevation = Constants.ELEVATION_VALUE.dp,
+        shape = MaterialTheme.shapes.medium
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            CardCurrencyInfoSection(currency = currency)
+
+//                    Insert line chart later
+            Image(
+                painter = painterResource(id = R.drawable.sample_line_chart_image),
+                contentDescription = "Line chart image",
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentScale = ContentScale.FillWidth
+            )
         }
     }
 }
@@ -67,15 +213,11 @@ private fun CardCurrencyInfoSection(
         ) {
             CurrencyItem(currency = currency)
 
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(Constants.PADDING_SIDE_VALUE.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-            ) {
+            Column() {
                 ValuesItem(
                     currency = currency,
-                    changesModifier = Modifier,
-                    priceModifier = Modifier
+                    priceModifier = Modifier,
+                    currencyPriceStyle = Typography.h2
                 )
             }
         }
@@ -146,7 +288,7 @@ private fun BackRowItem(onBackArrowPressed: () -> Unit) {
 @Preview
 @Composable
 fun CyptoDetailScreenPreview() {
-    CryptoDetailScreen(currencyCode = "BTC") {
+    CryptoDetailScreen(currencyCode = "BTC", {}) {
         
     }
 }

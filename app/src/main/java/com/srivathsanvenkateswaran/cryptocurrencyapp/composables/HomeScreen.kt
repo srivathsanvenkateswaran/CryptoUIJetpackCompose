@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -304,7 +305,7 @@ fun SetPriceAlertSection() {
 }
 
 @Composable
-private fun SetPriceAlertTextColumn() {
+fun SetPriceAlertTextColumn() {
     Column() {
         Text(
             text = "Set Price Alert",
@@ -354,8 +355,10 @@ fun ValuesItem(
     priceModifier: Modifier = Modifier
         .padding(top = 20.dp),
     changesModifier: Modifier = Modifier
-        .padding(top = 5.dp)
-) {
+        .padding(top = 5.dp),
+    currencyPriceStyle: TextStyle = Typography.h3,
+    currencyChangesStyle: TextStyle = Typography.h3
+    ) {
     var changeColor by remember {
         mutableStateOf(
             if(currency.changeType == "I") {
@@ -378,13 +381,13 @@ fun ValuesItem(
 
     Text(
         text = "£${currency.currentPrice}",
-        style = Typography.h3,
+        style = currencyPriceStyle,
         modifier = priceModifier
     )
 
     Text(
         text = "$changeOperator${currency.changes}%",
-        style = Typography.h3,
+        style = currencyChangesStyle,
         color = changeColor,
         modifier = changesModifier
     )
