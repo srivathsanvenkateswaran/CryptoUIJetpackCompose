@@ -227,7 +227,10 @@ private fun CardCurrencyInfoSection(
 }
 
 @Composable
-private fun TopNavigationRow(onBackArrowPressed: () -> Unit) {
+fun TopNavigationRow(
+    onBackArrowPressed: () -> Unit,
+    isStarNeeded: Boolean = true
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -242,15 +245,15 @@ private fun TopNavigationRow(onBackArrowPressed: () -> Unit) {
     ) {
         BackRowItem(onBackArrowPressed = onBackArrowPressed)
 
-        FavouritesStarItem()
+        FavouritesStarItem(isStarNeeded)
     }
 }
 
 @Composable
 private fun FavouritesStarItem(
-    isStartNeeded: Boolean = true
+    isStarNeeded: Boolean = true
 ) {
-    if (isStartNeeded) {
+    if (isStarNeeded) {
         Row() {
             Image(
                 painter = painterResource(id = R.drawable.star),
@@ -290,7 +293,13 @@ private fun BackRowItem(onBackArrowPressed: () -> Unit) {
 @Preview
 @Composable
 fun CyptoDetailScreenPreview() {
-    CryptoDetailScreen(currencyCode = "BTC", {}) {
-        
-    }
+    CryptoDetailScreen(
+        currencyCode = "ETH",
+        onBackArrowPressed = {
+
+        },
+        onButtonClick = {
+
+        }
+    )
 }

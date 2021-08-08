@@ -88,16 +88,29 @@ private fun HomeScreenContent(
                     .padding(start = Constants.PADDING_SIDE_VALUE.dp)
             )
 
-            LazyRow(
+            Row(
                 modifier = Modifier
-                    .padding(end = Constants.PADDING_SIDE_VALUE.dp)
+                    .horizontalScroll(rememberScrollState())
             ) {
-                items(items = DummyData.trendingCurrencies) { currency ->
-                    Spacer(modifier = Modifier.width(Constants.PADDING_SIDE_VALUE.dp))
+//                items(items = DummyData.trendingCurrencies) { currency ->
+//                    Spacer(modifier = Modifier.width(Constants.PADDING_SIDE_VALUE.dp))
+//                    CurrencyCard(
+//                        currency = currency,
+//                        onCardClick = onCardClick
+//                    )
+//                }
+
+                DummyData.trendingCurrencies.forEachIndexed{ index, currency ->
+                    if (index == 0) {
+                        Spacer(modifier = Modifier.width(Constants.PADDING_SIDE_VALUE.dp))
+                    }
+
                     CurrencyCard(
                         currency = currency,
                         onCardClick = onCardClick
                     )
+
+                    Spacer(modifier = Modifier.width(Constants.PADDING_SIDE_VALUE.dp))
                 }
             }
 
@@ -113,7 +126,7 @@ private fun HomeScreenContent(
 }
 
 @Composable
-private fun TransactionHistorySection() {
+fun TransactionHistorySection() {
     Card(
         modifier = Modifier
             .padding(Constants.PADDING_SIDE_VALUE.dp)

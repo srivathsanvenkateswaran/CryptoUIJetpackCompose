@@ -1,6 +1,8 @@
 package com.srivathsanvenkateswaran.cryptocurrencyapp
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -44,8 +46,8 @@ class MainActivity : ComponentActivity() {
                             onItemSelected = {
                                 when (it) {
                                     NavigationItems.Home -> navController.navigate(Screen.HomeScreen.route)
-                                    NavigationItems.Portfolio -> navController.navigate(Screen.TransactionScreen.route)
-                                    NavigationItems.Prices -> navController.navigate(Screen.CryptoDetailScreen.route)
+                                    NavigationItems.Portfolio -> navController.navigate(Screen.PortfolioScreen.route)
+                                    NavigationItems.Prices -> navController.navigate(Screen.PricesScreen.route)
                                     NavigationItems.Settings -> navController.navigate(Screen.SettingsScreen.route)
                                 }
                             }
@@ -53,7 +55,9 @@ class MainActivity : ComponentActivity() {
                     },
                     floatingActionButton = {
                         FloatingActionButton(
-                            onClick = {  },
+                            onClick = {
+                                      navController.navigate(Screen.TradeScreen.route)
+                            },
                             backgroundColor = Purple500,
                             contentColor = Color.White,
                             elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 0.dp)
@@ -104,19 +108,48 @@ fun Navigation(
                     navController.popBackStack()
                 },
                 onButtonClick = {
-
+                    navController.navigate(route = Screen.TransactionScreen.route + "/$currencyCode")
                 }
             )
         }
         composable(
-            route = Screen.TransactionScreen.route
+            route = Screen.TransactionScreen.route + "/{currencyCode}",
+            arguments = listOf(
+                navArgument(name = "currencyCode") {
+                    type = NavType.StringType
+                }
+            )
         ) {
-            TransactionScreen()
+            val currencyCode = it.arguments?.getString("currencyCode")!!
+            TransactionScreen(
+                onBackArrowPressed = {
+                    navController.popBackStack()
+                },
+                currencyCode = currencyCode,
+                onTradeButtonClick = {
+                    Log.d("TransactionScreen", "Trade section coming soon...")
+                }
+            )
         }
         composable(
             route = Screen.SettingsScreen.route
         ) {
             SettingsScreen()
+        }
+        composable(
+            route = Screen.PortfolioScreen.route
+        ) {
+            PortfolioScreen()
+        }
+        composable(
+            route = Screen.PricesScreen.route
+        ) {
+            PricesScreen()
+        }
+        composable(
+            route = Screen.TradeScreen.route
+        ) {
+            TradeScreen()
         }
     }
 }
