@@ -12,7 +12,7 @@ import com.srivathsanvenkateswaran.cryptocurrencyapp.R
 
 private val RobotoBlack = FontFamily(Font(R.font.roboto_black))
 private val RobotoBold = FontFamily(Font(R.font.roboto_bold))
-private val RobotoRegular = FontFamily(Font(R.font.roboto_regular))
+val RobotoRegular = FontFamily(Font(R.font.roboto_regular))
 
 val Typography = Typography(
     h1 = TextStyle(

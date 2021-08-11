@@ -134,7 +134,11 @@ fun Navigation(
         composable(
             route = Screen.SettingsScreen.route
         ) {
-            SettingsScreen()
+            SettingsScreen(
+                onBackArrowPressed = {
+                    navController.popBackStack()
+                }
+            )
         }
         composable(
             route = Screen.PortfolioScreen.route

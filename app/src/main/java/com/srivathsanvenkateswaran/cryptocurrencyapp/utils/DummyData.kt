@@ -6,6 +6,12 @@ import com.srivathsanvenkateswaran.cryptocurrencyapp.models.*
 
 object DummyData {
 
+    val user = User(
+        userName = "srivathsanvenkateswaran",
+        firstName = "Srivathsan",
+        lastName = "Venkateswaran"
+    )
+
     val portfolio = Portfolio(
         balance = 12724.33F,
         changes = 2.36F,
