@@ -143,7 +143,14 @@ fun Navigation(
         composable(
             route = Screen.PortfolioScreen.route
         ) {
-            PortfolioScreen()
+            PortfolioScreen(
+                onBackArrowPressed = {
+
+                },
+                onCoinSearch = {
+
+                }
+            )
         }
         composable(
             route = Screen.PricesScreen.route

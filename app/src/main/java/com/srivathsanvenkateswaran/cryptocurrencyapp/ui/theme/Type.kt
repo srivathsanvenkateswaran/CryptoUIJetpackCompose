@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.sp
 import com.srivathsanvenkateswaran.cryptocurrencyapp.R
 
 private val RobotoBlack = FontFamily(Font(R.font.roboto_black))
-private val RobotoBold = FontFamily(Font(R.font.roboto_bold))
+val RobotoBold = FontFamily(Font(R.font.roboto_bold))
 val RobotoRegular = FontFamily(Font(R.font.roboto_regular))
 
 val Typography = Typography(
