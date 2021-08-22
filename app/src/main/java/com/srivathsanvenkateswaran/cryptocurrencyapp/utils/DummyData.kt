@@ -6,6 +6,14 @@ import com.srivathsanvenkateswaran.cryptocurrencyapp.models.*
 
 object DummyData {
 
+    val topChipsName = listOf<String>(
+        "All    4 ",
+        "Following    2 ",
+        "Crypto    4 ",
+        "Utility Tokens    1 ",
+        "Stable Coins    2 "
+    )
+
     val user = User(
         userName = "srivathsanvenkateswaran",
         firstName = "Srivathsan",
@@ -408,6 +416,11 @@ object DummyData {
             )
         ),
     )
+
+    val favouriteTokens = listOf<TrendingCurrency>(
+        trendingCurrencies[0],
+        trendingCurrencies[1]
+        )
 
     val transactionHistory = listOf(
         Transaction(

@@ -190,7 +190,7 @@ private fun CoinAmountSection(currency: TrendingCurrency) {
 }
 
 @Composable
-private fun SearchField(
+fun SearchField(
     onCoinSearch: (String) -> Unit
 ) {
     var textFieldState by remember {
