@@ -161,6 +161,9 @@ fun Navigation(
                 },
                 onCoinSearch = {
 
+                },
+                onItemClick = { currencyCode ->
+                    navController.navigate(Screen.CryptoDetailScreen.route + "/$currencyCode")
                 }
             )
         }

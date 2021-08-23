@@ -417,10 +417,19 @@ object DummyData {
         ),
     )
 
-    val favouriteTokens = listOf<TrendingCurrency>(
+    val followingTokens = listOf<TrendingCurrency>(
         trendingCurrencies[0],
         trendingCurrencies[1]
         )
+
+    val utilityTokens = listOf<TrendingCurrency>(
+        trendingCurrencies[3]
+    )
+
+    val stableCoins = listOf<TrendingCurrency>(
+        trendingCurrencies[1],
+        trendingCurrencies[0]
+    )
 
     val transactionHistory = listOf(
         Transaction(
