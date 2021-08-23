@@ -1,6 +1,6 @@
 # CryptoUIJetpackCompose
 
-Crytocurrency App UI Took Kit implemented using Jetpack Compose
+Cryptocurrency App UI Took Kit implemented using Jetpack Compose
 
 ## Preview
 
