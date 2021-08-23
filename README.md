@@ -17,3 +17,9 @@ Portfolio Screen </br>
 Prices Screen </br>
 ![Prices Screen](https://user-images.githubusercontent.com/74530357/130482879-9232be6b-f2a3-45ca-88de-ad5df4c5baf1.png)
  </br> </br>
+
+## Contribution
+
+Feel free to contribute to the UI Tool kit by fixing the issues!! 
+
+Ping me in LinkedIn for some healthy discussions!!
