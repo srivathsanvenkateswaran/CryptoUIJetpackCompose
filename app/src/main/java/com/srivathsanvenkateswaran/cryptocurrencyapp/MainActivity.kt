@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
@@ -28,149 +30,82 @@ import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.PurpleOne
 import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.PurpleTwo
 import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.NavigationItems
 import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.Screen
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MainActivity : ComponentActivity() {
+    @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CryptocurrencyAppTheme {
-                val navController = rememberNavController()
-
-                Scaffold(
-                    bottomBar = {
-                        BottomnavigationBar(
-                            onItemSelected = {
-                                when (it) {
-                                    NavigationItems.Home -> navController.navigate(Screen.HomeScreen.route)
-                                    NavigationItems.Portfolio -> navController.navigate(Screen.PortfolioScreen.route)
-                                    NavigationItems.Prices -> navController.navigate(Screen.PricesScreen.route)
-                                    NavigationItems.Settings -> navController.navigate(Screen.SettingsScreen.route)
-                                }
-                            }
-                        )
-                    },
-                    floatingActionButton = {
-                        FloatingActionButton(
-                            onClick = {
-                                      navController.navigate(Screen.TradeScreen.route)
-                            },
-                            backgroundColor = Purple500,
-                            contentColor = Color.White,
-                            elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 0.dp)
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.transaction),
-                                contentDescription = null
-                            )
-                        }
-                    },
-                    floatingActionButtonPosition = FabPosition.Center,
-                    isFloatingActionButtonDocked = true
-                ) {
-                    Navigation(navController)
-                }
+                TradeModelBottomSheet()
             }
         }
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
-fun Navigation(
-    navController: NavHostController
+private fun MainActivityContent(
+    coroutineScope: CoroutineScope,
+    modalBottomSheetState: ModalBottomSheetState
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = Screen.HomeScreen.route
-    ) {
-        composable(
-            route = Screen.HomeScreen.route
-        ) {
-            HomeScreen() { currencyCode ->
-                navController.navigate(Screen.CryptoDetailScreen.route + "/$currencyCode")
+    val navController = rememberNavController()
+
+    Scaffold(
+        bottomBar = {
+            BottomnavigationBar(
+                onItemSelected = {
+                    when (it) {
+                        NavigationItems.Home -> navController.navigate(Screen.HomeScreen.route)
+                        NavigationItems.Portfolio -> navController.navigate(Screen.PortfolioScreen.route)
+                        NavigationItems.Prices -> navController.navigate(Screen.PricesScreen.route)
+                        NavigationItems.Settings -> navController.navigate(Screen.SettingsScreen.route)
+                    }
+                }
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    coroutineScope.launch{
+                        modalBottomSheetState.show()
+                    }
+                },
+                backgroundColor = Purple500,
+                contentColor = Color.White,
+                elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 0.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.transaction),
+                    contentDescription = null
+                )
             }
-        }
-        composable(
-            route = Screen.CryptoDetailScreen.route + "/{currencyCode}",
-            arguments = listOf(
-                navArgument(name = "currencyCode") {
-                    type = NavType.StringType
-                }
-            )
-        ) {
-            val currencyCode = it.arguments?.getString("currencyCode")!!
-            CryptoDetailScreen(
-                currencyCode = currencyCode,
-                onBackArrowPressed = {
-                    navController.popBackStack()
-                },
-                onButtonClick = {
-                    navController.navigate(route = Screen.TransactionScreen.route + "/$currencyCode")
-                }
-            )
-        }
-        composable(
-            route = Screen.TransactionScreen.route + "/{currencyCode}",
-            arguments = listOf(
-                navArgument(name = "currencyCode") {
-                    type = NavType.StringType
-                }
-            )
-        ) {
-            val currencyCode = it.arguments?.getString("currencyCode")!!
-            TransactionScreen(
-                onBackArrowPressed = {
-                    navController.popBackStack()
-                },
-                currencyCode = currencyCode,
-                onTradeButtonClick = {
-                    Log.d("TransactionScreen", "Trade section coming soon...")
-                }
-            )
-        }
-        composable(
-            route = Screen.SettingsScreen.route
-        ) {
-            SettingsScreen(
-                onBackArrowPressed = {
-                    navController.popBackStack()
-                }
-            )
-        }
-        composable(
-            route = Screen.PortfolioScreen.route
-        ) {
-            PortfolioScreen(
-                onBackArrowPressed = {
-
-                },
-                onCoinSearch = {
-
-                }
-            )
-        }
-        composable(
-            route = Screen.PricesScreen.route
-        ) {
-            PricesScreen(
-                onBackArrowPressed = {
-
-                },
-                onCoinSearch = {
-
-                },
-                onItemClick = { currencyCode ->
-                    navController.navigate(Screen.CryptoDetailScreen.route + "/$currencyCode")
-                }
-            )
-        }
-        composable(
-            route = Screen.TradeScreen.route
-        ) {
-            TradeScreen()
-        }
+        },
+        floatingActionButtonPosition = FabPosition.Center,
+        isFloatingActionButtonDocked = true
+    ) {
+        Navigation(navController)
     }
+}
+
+
+@Composable
+@ExperimentalMaterialApi
+private fun TradeModelBottomSheet() {
+    val modalBottomSheetState = rememberModalBottomSheetState(
+        initialValue =ModalBottomSheetValue.Hidden
+    )
+
+    val scope = rememberCoroutineScope()
+
+    ModalBottomSheetLayout(
+        sheetState = modalBottomSheetState,
+        sheetContent = {
+            TradeScreen()
+        },
+        content = {
+            MainActivityContent(scope, modalBottomSheetState)
+        }
+    )
 }

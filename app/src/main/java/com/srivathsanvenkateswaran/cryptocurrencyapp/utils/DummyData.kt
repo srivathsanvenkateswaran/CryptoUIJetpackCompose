@@ -6,6 +6,12 @@ import com.srivathsanvenkateswaran.cryptocurrencyapp.models.*
 
 object DummyData {
 
+    val tradeScreenSections = listOf<String>(
+        "Transact",
+        "Repeat",
+        "Limit"
+    )
+
     val topChipsName = listOf<String>(
         "All    4 ",
         "Following    2 ",
