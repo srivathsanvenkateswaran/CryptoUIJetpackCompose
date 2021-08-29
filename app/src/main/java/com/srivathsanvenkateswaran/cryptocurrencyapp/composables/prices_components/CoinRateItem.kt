@@ -23,7 +23,7 @@ import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.DummyData
 @Composable
 fun CoinRateItem(
     currency: TrendingCurrency,
-    onItemClick: (String) -> Unit
+    onItemClick: (String) -> Unit = {}
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -46,9 +46,13 @@ fun CoinRateItem(
 
 
 @Composable
-private fun CurrencyInfoSection(currency: TrendingCurrency) {
+fun CurrencyInfoSection(
+    currency: TrendingCurrency,
+    modifier: Modifier = Modifier
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
     ) {
         Image(
             painter = painterResource(id = currency.imageRes),

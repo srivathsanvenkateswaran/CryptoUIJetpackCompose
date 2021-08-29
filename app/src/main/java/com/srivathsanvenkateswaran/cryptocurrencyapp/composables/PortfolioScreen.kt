@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.srivathsanvenkateswaran.cryptocurrencyapp.R
+import com.srivathsanvenkateswaran.cryptocurrencyapp.composables.prices_components.CurrencyInfoSection
 import com.srivathsanvenkateswaran.cryptocurrencyapp.models.TrendingCurrency
 import com.srivathsanvenkateswaran.cryptocurrencyapp.ui.theme.*
 import com.srivathsanvenkateswaran.cryptocurrencyapp.utils.Constants
@@ -121,35 +122,6 @@ private fun CoinItem(currency: TrendingCurrency) {
     }
 }
 
-
-@Composable
-private fun CurrencyInfoSection(currency: TrendingCurrency) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Image(
-            painter = painterResource(id = currency.imageRes),
-            contentDescription = "Transaction image",
-            modifier = Modifier
-                .padding(end = (Constants.PADDING_SIDE_VALUE * 1.5).dp)
-        )
-
-        Column {
-            Text(
-                text = currency.currencyName,
-                style = Typography.h4,
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = currency.currencyCode,
-                style = Typography.h5,
-                color = Gray
-            )
-        }
-    }
-}
 
 @Composable
 private fun CoinAmountSection(currency: TrendingCurrency) {

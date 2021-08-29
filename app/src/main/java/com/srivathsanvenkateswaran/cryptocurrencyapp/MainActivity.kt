@@ -38,7 +38,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             CryptocurrencyAppTheme {
-                TradeModelBottomSheet()
+                TradeModelBottomSheet(
+                    onButtonClick = {
+                        Toast
+                            .makeText(this, "Processing transaction...", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                )
             }
         }
     }
@@ -92,7 +98,9 @@ private fun MainActivityContent(
 
 @Composable
 @ExperimentalMaterialApi
-private fun TradeModelBottomSheet() {
+private fun TradeModelBottomSheet(
+    onButtonClick: () -> Unit
+) {
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue =ModalBottomSheetValue.Hidden
     )
@@ -102,7 +110,11 @@ private fun TradeModelBottomSheet() {
     ModalBottomSheetLayout(
         sheetState = modalBottomSheetState,
         sheetContent = {
-            TradeScreen()
+            TradeScreen(
+                onButtonClick = {
+                    onButtonClick()
+                }
+            )
         },
         content = {
             MainActivityContent(scope, modalBottomSheetState)

@@ -1,10 +1,37 @@
 package com.srivathsanvenkateswaran.cryptocurrencyapp.utils
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Label
+import androidx.compose.material.icons.filled.RepeatOneOn
 import androidx.compose.ui.platform.isDebugInspectorInfoEnabled
 import com.srivathsanvenkateswaran.cryptocurrencyapp.R
 import com.srivathsanvenkateswaran.cryptocurrencyapp.models.*
 
 object DummyData {
+
+    val repeatOptions = listOf<RepeatOptions>(
+        RepeatOptions(
+            iconImageVector = Icons.Default.RepeatOneOn,
+            optionName = "Repeats",
+            frequency = "Never"
+        ),
+        RepeatOptions(
+            iconImageVector = Icons.Default.DateRange,
+            optionName = "Starts",
+            frequency = "Today"
+        ),
+        RepeatOptions(
+            iconImageVector = Icons.Default.DateRange,
+            optionName = "Ends",
+            frequency = "Never"
+        ),
+        RepeatOptions(
+            iconImageVector = Icons.Default.Label,
+            optionName = "Label",
+            frequency = "Edit label"
+        )
+    )
 
     val tradeScreenSections = listOf<String>(
         "Transact",
