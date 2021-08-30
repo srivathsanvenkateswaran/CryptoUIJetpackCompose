@@ -131,11 +131,12 @@ private fun SectionCard(
     }
 
     Card(
-        shape = RoundedCornerShape((2 * Constants.ELEVATION_VALUE).dp),
         backgroundColor = cardColor,
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = onCardClick)
+            .clip(RoundedCornerShape((2 * Constants.ELEVATION_VALUE).dp))
+            .clickable(onClick = onCardClick),
+        elevation = 0.dp
     ) {
         Text(
             text = text,

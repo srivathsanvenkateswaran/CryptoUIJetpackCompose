@@ -13,6 +13,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.colorspace.WhitePoint
 import androidx.compose.ui.tooling.preview.Preview
@@ -118,9 +119,9 @@ private fun SectionChip(
     }
 
     Card(
-        shape = RoundedCornerShape(50.dp),
         backgroundColor = cardColor,
         modifier = Modifier
+            .clip(RoundedCornerShape(50.dp))
             .clickable(onClick = onClick)
     ) {
         Text(
