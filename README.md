@@ -17,6 +17,8 @@ Portfolio Screen </br>
 Prices Screen </br>
 ![Prices Screen](https://user-images.githubusercontent.com/74530357/130482879-9232be6b-f2a3-45ca-88de-ad5df4c5baf1.png)
  </br> </br>
+ Trade Screens </br>
+ ![Trade Screens](https://user-images.githubusercontent.com/74530357/131332809-8aa8052d-6ba9-4233-9eb7-5ec45848c1cd.png) </br> </br>
 
 ## Contribution
 
