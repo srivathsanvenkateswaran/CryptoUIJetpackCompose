@@ -2,6 +2,10 @@
 
 Cryptocurrency App UI Took Kit implemented using Jetpack Compose
 
+## APK
+
+Check out the app here: https://drive.google.com/file/d/1aqJOrwwoSmEpXzaf31zVv58eq_7ln5of/view?usp=sharing
+
 ## Preview
 
  Home CryptoDetails and Transaction Screen </br>
