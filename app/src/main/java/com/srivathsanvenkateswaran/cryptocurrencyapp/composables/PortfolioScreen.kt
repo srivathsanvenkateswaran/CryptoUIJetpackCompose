@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -42,7 +43,7 @@ fun PortfolioScreen(
     Surface(
         modifier = Modifier
             .fillMaxSize(),
-        color = Color.White
+        color = LightGray1
     ) {
         Column(
             modifier = Modifier
@@ -58,7 +59,14 @@ fun PortfolioScreen(
 
             SearchField(onCoinSearch = onCoinSearch)
 
-            CurrencySection()
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Constants.PADDING_SIDE_VALUE.dp),
+                elevation = Constants.ELEVATION_VALUE.dp
+            ) {
+                CurrencySection()
+            }
         }
     }
 }

@@ -84,7 +84,7 @@ fun TradeScreen(
 @Composable
 private fun SectionSelectorRow(): Int {
     var selectedSectionIndex by remember {
-        mutableStateOf(2)
+        mutableStateOf(0)
     }
 
     Row(
