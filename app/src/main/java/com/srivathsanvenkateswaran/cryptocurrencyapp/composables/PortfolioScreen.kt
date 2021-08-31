@@ -97,6 +97,8 @@ private fun CurrencySection() {
                     )
             )
         }
+        
+        Spacer(modifier = Modifier.height(Constants.PADDING_SIDE_VALUE.dp))
 
         DummyData.trendingCurrencies.forEachIndexed { index, currency ->
             CoinItem(currency = currency)
